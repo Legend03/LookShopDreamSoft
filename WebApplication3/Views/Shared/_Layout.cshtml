@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/WebApplication3.styles.css" asp-append-version="true"/>
+    
+        <title>LookShop</title>
+        <link rel="stylesheet" href="startPage/index.css" />
+    <link
+          rel="stylesheet"
+          href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+          integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+          crossorigin="anonymous"
+        />
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+          href="http://fonts.googleapis.com/css?family=Roboto&subset=latin,cyrillic"
+          rel="stylesheet"
+          type="text/css"
+        />
+        <link
+          rel="stylesheet"
+          href="https://unpkg.com/swiper@8/swiper-bundle.min.css"
+        />
+        <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+</head>
+<body>
+
+    <div class="header">
+      <div class="maxHeader">
+        <div class="left">
+          <p>CUSTOM CARE: 888-88-888</p>
+        </div>
+        <div class="right">
+            <div class="pal"></div>
+          <p class="UStext" style="margin-top: 15px">$ US</p>
+          <p class="strVerh" style="margin-top: 15px">▾</p>
+          <div class="pal"></div>
+          <img src="images/accountImage.jpg" alt="" class="accountImg"/>
+          <p class="textAccount" style="margin-top: 15px" onclick="window.location.href='@Url.Action("Login", "Account")';">MY ACCOUNT</p>
+          <div class="pal"></div>
+          <img src="images/Shape1.png" alt="" class="lupaImg" />
+          <div class="pal"></div>
+        </div>
+      </div>
+    </div>
+
+<div class="container">
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+</div>
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
+
+<footer class="footer" style="line-height: 10px;">
+        <div class="container footer__container">
+          <i
+            class="fas fa-bars icon icon--menu hide mobile-show"
+            id="hamburger-bottom"
+          ></i>
+          <ul class="footer__menu mobile-hide">
+            <li class="footer__item">
+              <a href="#" class="footer__link">Privacy & Cookies</a>
+            </li>
+            <li class="footer__item">
+              <a href="#" class="footer__link">Terms & Conditions</a>
+            </li>
+            <li class="footer__item">
+              <a href="#" class="footer__link">Accesibility</a>
+            </li>
+            <li class="footer__item">
+              <a href="#" class="footer__link">Store directory</a>
+            </li>
+            <li class="footer__item">
+              <a href="#" class="footer__link">About Us</a>
+            </li>
+          </ul>
+          <div>
+            <div style="margin-top: 0px">&copy; LookShop.com</div>
+            <div style="margin-top: 20px">All Right Reserved</div>
+          </div>
+        </div>
+      </footer>
+
+</body>
+</html>
