@@ -11,6 +11,6 @@
         public int? Balance { get; set; }
         public string? Password { get; set; }
 
-        public int? RoleId { get; set; }
+        public ICollection<Bugs>? Bubs { get; set; }
     }
 }

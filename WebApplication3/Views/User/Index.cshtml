@@ -1,4 +1,4 @@
-﻿@model System.Collections.Generic.IEnumerable<WebApplication3.Models.User>
+﻿@model System.Collections.Generic.IEnumerable<WebApplication3.Models.Employees>
 
 @{
     ViewBag.Title = "title";
@@ -7,5 +7,5 @@
 
 @foreach (var item in Model)
 {
-    <p>@item.Email - @item.Role!.Name <a asp-controller="User" asp-action="Detail" asp-route-userId="@item.Id">detail</a></p>
+    <p>@item.Mail - @item.Role!.Name <a asp-controller="User" asp-action="Detail" asp-route-userId="@item.Id">detail</a></p>
 }

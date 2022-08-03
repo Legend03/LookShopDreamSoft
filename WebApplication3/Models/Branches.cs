@@ -8,6 +8,7 @@
         public string? PhoneNumber { get; set; }
         public string? Mail { get; set; }
 
-        public int MainOfficeId { get; set; }
+        public int? MainOfficeId { get; set; }
+        public ICollection<Departments>? MainOffice { get; set; }
     }
 }

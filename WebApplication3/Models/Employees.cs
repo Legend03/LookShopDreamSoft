@@ -11,5 +11,8 @@
         public string? Password { get; set; }
 
         public int? DepartmentId { get; set; }
+        public Departments? Department { get; set; }
+        public int? RoleId { get; set; }
+        public Role? Role { get; set; }
     }
 }
