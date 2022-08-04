@@ -24,13 +24,13 @@ namespace WebApplication3.Migrations
 
             modelBuilder.Entity("BugsCustomers", b =>
                 {
-                    b.Property<int>("BubsId")
+                    b.Property<int>("BugsId")
                         .HasColumnType("int");
 
                     b.Property<int>("CustomerIdId")
                         .HasColumnType("int");
 
-                    b.HasKey("BubsId", "CustomerIdId");
+                    b.HasKey("BugsId", "CustomerIdId");
 
                     b.HasIndex("CustomerIdId");
 
@@ -140,9 +140,14 @@ namespace WebApplication3.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ParentDepartmentId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BranchId");
+
+                    b.HasIndex("ParentDepartmentId");
 
                     b.ToTable("Departments");
                 });
@@ -196,22 +201,26 @@ namespace WebApplication3.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Message")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RecipientId")
+                    b.Property<int?>("RecipientId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SenderId")
+                    b.Property<int?>("SenderId")
                         .HasColumnType("int");
 
                     b.Property<bool?>("Status")
                         .HasColumnType("bit");
 
+                    b.Property<string>("TextMessage")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("Time")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RecipientId");
+
+                    b.HasIndex("SenderId");
 
                     b.ToTable("MessagesBetweenDepartment");
                 });
@@ -259,35 +268,11 @@ namespace WebApplication3.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("WebApplication3.Models.SubDepartment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Location")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ParentDepartmentId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ParentDepartmentId");
-
-                    b.ToTable("SubDepartment");
-                });
-
             modelBuilder.Entity("BugsCustomers", b =>
                 {
                     b.HasOne("WebApplication3.Models.Bugs", null)
                         .WithMany()
-                        .HasForeignKey("BubsId")
+                        .HasForeignKey("BugsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -315,7 +300,13 @@ namespace WebApplication3.Migrations
                         .WithMany("MainOffice")
                         .HasForeignKey("BranchId");
 
+                    b.HasOne("WebApplication3.Models.Departments", "ParentDepartment")
+                        .WithMany()
+                        .HasForeignKey("ParentDepartmentId");
+
                     b.Navigation("Branch");
+
+                    b.Navigation("ParentDepartment");
                 });
 
             modelBuilder.Entity("WebApplication3.Models.Employees", b =>
@@ -333,6 +324,21 @@ namespace WebApplication3.Migrations
                     b.Navigation("Role");
                 });
 
+            modelBuilder.Entity("WebApplication3.Models.MessagesBetweenDepartments", b =>
+                {
+                    b.HasOne("WebApplication3.Models.Employees", "Recipient")
+                        .WithMany("MessagesBetweenDepartmentsRecipient")
+                        .HasForeignKey("RecipientId");
+
+                    b.HasOne("WebApplication3.Models.Employees", "Sender")
+                        .WithMany("MessagesBetweenDepartmentsSender")
+                        .HasForeignKey("SenderId");
+
+                    b.Navigation("Recipient");
+
+                    b.Navigation("Sender");
+                });
+
             modelBuilder.Entity("WebApplication3.Models.MessagesInTheDepartments", b =>
                 {
                     b.HasOne("WebApplication3.Models.Employees", "Sender")
@@ -344,17 +350,6 @@ namespace WebApplication3.Migrations
                     b.Navigation("Sender");
                 });
 
-            modelBuilder.Entity("WebApplication3.Models.SubDepartment", b =>
-                {
-                    b.HasOne("WebApplication3.Models.Departments", "ParentDepartment")
-                        .WithMany("SubDepartments")
-                        .HasForeignKey("ParentDepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ParentDepartment");
-                });
-
             modelBuilder.Entity("WebApplication3.Models.Branches", b =>
                 {
                     b.Navigation("MainOffice");
@@ -363,8 +358,13 @@ namespace WebApplication3.Migrations
             modelBuilder.Entity("WebApplication3.Models.Departments", b =>
                 {
                     b.Navigation("Employees");
+                });
 
-                    b.Navigation("SubDepartments");
+            modelBuilder.Entity("WebApplication3.Models.Employees", b =>
+                {
+                    b.Navigation("MessagesBetweenDepartmentsRecipient");
+
+                    b.Navigation("MessagesBetweenDepartmentsSender");
                 });
 
             modelBuilder.Entity("WebApplication3.Models.Role", b =>

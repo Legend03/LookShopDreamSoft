@@ -11,6 +11,6 @@
         public int? Balance { get; set; }
         public string? Password { get; set; }
 
-        public ICollection<Bugs>? Bubs { get; set; }
+        public ICollection<Bugs>? Bugs { get; set; }
     }
 }

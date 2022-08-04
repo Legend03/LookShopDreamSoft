@@ -46,23 +46,6 @@ namespace WebApplication3.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MessagesBetweenDepartment",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SenderId = table.Column<int>(type: "int", nullable: false),
-                    RecipientId = table.Column<int>(type: "int", nullable: false),
-                    Message = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Time = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<bool>(type: "bit", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MessagesBetweenDepartment", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
                 {
@@ -83,7 +66,8 @@ namespace WebApplication3.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BranchId = table.Column<int>(type: "int", nullable: true)
+                    BranchId = table.Column<int>(type: "int", nullable: true),
+                    ParentDepartmentId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -92,6 +76,11 @@ namespace WebApplication3.Migrations
                         name: "FK_Departments_Branches_BranchId",
                         column: x => x.BranchId,
                         principalTable: "Branches",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Departments_Departments_ParentDepartmentId",
+                        column: x => x.ParentDepartmentId,
+                        principalTable: "Departments",
                         principalColumn: "Id");
                 });
 
@@ -147,39 +136,18 @@ namespace WebApplication3.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SubDepartment",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ParentDepartmentId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SubDepartment", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_SubDepartment_Departments_ParentDepartmentId",
-                        column: x => x.ParentDepartmentId,
-                        principalTable: "Departments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "BugsCustomers",
                 columns: table => new
                 {
-                    BubsId = table.Column<int>(type: "int", nullable: false),
+                    BugsId = table.Column<int>(type: "int", nullable: false),
                     CustomerIdId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BugsCustomers", x => new { x.BubsId, x.CustomerIdId });
+                    table.PrimaryKey("PK_BugsCustomers", x => new { x.BugsId, x.CustomerIdId });
                     table.ForeignKey(
-                        name: "FK_BugsCustomers_Bugs_BubsId",
-                        column: x => x.BubsId,
+                        name: "FK_BugsCustomers_Bugs_BugsId",
+                        column: x => x.BugsId,
                         principalTable: "Bugs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -189,6 +157,33 @@ namespace WebApplication3.Migrations
                         principalTable: "Customers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MessagesBetweenDepartment",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TextMessage = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Time = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: true),
+                    SenderId = table.Column<int>(type: "int", nullable: true),
+                    RecipientId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MessagesBetweenDepartment", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MessagesBetweenDepartment_Employees_RecipientId",
+                        column: x => x.RecipientId,
+                        principalTable: "Employees",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_MessagesBetweenDepartment_Employees_SenderId",
+                        column: x => x.SenderId,
+                        principalTable: "Employees",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -229,6 +224,11 @@ namespace WebApplication3.Migrations
                 column: "BranchId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Departments_ParentDepartmentId",
+                table: "Departments",
+                column: "ParentDepartmentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Employees_DepartmentId",
                 table: "Employees",
                 column: "DepartmentId");
@@ -239,14 +239,19 @@ namespace WebApplication3.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MessagesInTheDepartment_SenderId",
-                table: "MessagesInTheDepartment",
+                name: "IX_MessagesBetweenDepartment_RecipientId",
+                table: "MessagesBetweenDepartment",
+                column: "RecipientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MessagesBetweenDepartment_SenderId",
+                table: "MessagesBetweenDepartment",
                 column: "SenderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SubDepartment_ParentDepartmentId",
-                table: "SubDepartment",
-                column: "ParentDepartmentId");
+                name: "IX_MessagesInTheDepartment_SenderId",
+                table: "MessagesInTheDepartment",
+                column: "SenderId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -259,9 +264,6 @@ namespace WebApplication3.Migrations
 
             migrationBuilder.DropTable(
                 name: "MessagesInTheDepartment");
-
-            migrationBuilder.DropTable(
-                name: "SubDepartment");
 
             migrationBuilder.DropTable(
                 name: "Bugs");

@@ -17,5 +17,4 @@ public class AppDbContext : DbContext
     public DbSet<Employees> Employees { get; set; }
     public DbSet<MessagesBetweenDepartments> MessagesBetweenDepartment { get; set; }
     public DbSet<MessagesInTheDepartments> MessagesInTheDepartment { get; set; }
-    public DbSet<SubDepartment> SubDepartment { get; set; }
 }

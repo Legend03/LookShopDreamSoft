@@ -14,5 +14,9 @@
         public Departments? Department { get; set; }
         public int? RoleId { get; set; }
         public Role? Role { get; set; }
+
+        public List<MessagesBetweenDepartments> MessagesBetweenDepartmentsSender { get; set; }
+
+        public List<MessagesBetweenDepartments> MessagesBetweenDepartmentsRecipient { get; set; }
     }
 }
