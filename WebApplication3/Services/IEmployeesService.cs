@@ -4,17 +4,17 @@ using WebApplication3.Models;
 
 namespace WebApplication3.Services;
 
-public interface IUserService
+public interface IEmployeesService
 {
     Task<IEnumerable<Employees>> GetAll();
     Task<Employees?> GetById(int userId);
 }
 
-public class UserService : IUserService
+public class EmployeesService : IEmployeesService
 {
     private readonly AppDbContext _db;
 
-    public UserService(AppDbContext db)
+    public EmployeesService(AppDbContext db)
     {
         _db = db;
     }

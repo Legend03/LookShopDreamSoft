@@ -15,30 +15,41 @@ public class AccountController : Controller
     {
         _context = context;
     }
+
     [HttpGet]
     public IActionResult Login()
     {
         return View();
     }
+
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Login(Employees model)
     {
         if (ModelState.IsValid)
         {
-            Employees employees = await _context.Employees
+            var employee = await _context.Employees
                 .Include(u => u.Role)
                 .FirstOrDefaultAsync(u => u.Mail == model.Mail && u.Password == model.Password);
-            if (employees != null)
+            var customer = await _context.Customers
+                .FirstOrDefaultAsync(u => u.Mail == model.Mail && u.Password == model.Password);
+            if (employee != null)
             {
-                await Authenticate(employees);
+                await Authenticate(employee);
 
-                return RedirectToAction("Index", "User");
+                return RedirectToAction("Index", "Employees");
+            }
+            else if(customer != null)
+            {
+                await Authenticate(customer);
+
+                return RedirectToAction("Index", "Customers");
             }
             ModelState.AddModelError("", "Некорректные логин и(или) пароль");
         }
         return View(model);
     }
+
     private async Task Authenticate(Employees employees)
     {
         var claims = new List<Claim>
@@ -50,6 +61,20 @@ public class AccountController : Controller
         ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,
             ClaimsIdentity.DefaultRoleClaimType);
         
+        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+    }
+
+    private async Task Authenticate(Customers employees)
+    {
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimsIdentity.DefaultNameClaimType, employees.Mail!),
+            new Claim(ClaimsIdentity.DefaultRoleClaimType, "Customer")
+        };
+
+        ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,
+            ClaimsIdentity.DefaultRoleClaimType);
+
         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
     }
 }

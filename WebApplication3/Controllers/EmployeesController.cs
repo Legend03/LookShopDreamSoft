@@ -5,26 +5,26 @@ using WebApplication3.Services;
 
 namespace WebApplication3.Controllers;
 
-public class UserController : Controller
+public class EmployeesController : Controller
 {
-    private readonly IUserService _userService;
+    private readonly IEmployeesService _employeesService;
 
-    public UserController(IUserService userService)
+    public EmployeesController(IEmployeesService employeesService)
     {
-        _userService = userService;
+        _employeesService = employeesService;
     }
 
-    [Authorize]
+    [Authorize(Roles = "admin")]
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        return View(await _userService.GetAll());
+        return View();
     }
 
     [Authorize(Roles = "admin")]
     [HttpGet]
     public async Task<IActionResult> Detail(int userId)
     {
-        return View(await _userService.GetById(userId));
+        return View(await _employeesService.GetById(userId));
     }
 }
