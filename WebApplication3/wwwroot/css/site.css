@@ -262,13 +262,11 @@ body {
   border: none;
 }
 
-/*.btn {
-  width: 120px;
-  height: 30px;
+.btn {
   background-color: #fe926c;
   border: 0px;
   color: white;
-}*/
+}
 
 .btnSecond{
   height: 28px;
