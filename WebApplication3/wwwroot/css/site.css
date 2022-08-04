@@ -262,13 +262,14 @@ body {
   border: none;
 }
 
-.btn {
+/*.btn {
   width: 120px;
   height: 30px;
   background-color: #fe926c;
   border: 0px;
   color: white;
-}
+}*/
+
 .btnSecond{
   height: 28px;
   width: 30px;
