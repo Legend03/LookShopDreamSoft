@@ -8,7 +8,14 @@ public class AppDbContext : DbContext
     public AppDbContext(DbContextOptions options) : base(options)
     {
     }
-
-    public DbSet<User> Users { get; set; }
+    
     public DbSet<Role> Roles { get; set; }
+    public DbSet<Branches> Branches { get; set; }
+    public DbSet<Bugs> Bugs { get; set; }
+    public DbSet<Customers> Customers { get; set; }
+    public DbSet<Departments> Departments { get; set; }
+    public DbSet<Employees> Employees { get; set; }
+    public DbSet<MessagesBetweenDepartments> MessagesBetweenDepartment { get; set; }
+    public DbSet<MessagesInTheDepartments> MessagesInTheDepartment { get; set; }
+    public DbSet<SubDepartment> SubDepartment { get; set; }
 }

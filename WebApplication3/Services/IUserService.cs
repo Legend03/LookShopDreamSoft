@@ -6,8 +6,8 @@ namespace WebApplication3.Services;
 
 public interface IUserService
 {
-    Task<IEnumerable<User>> GetAll();
-    Task<User?> GetById(int userId);
+    Task<IEnumerable<Employees>> GetAll();
+    Task<Employees?> GetById(int userId);
 }
 
 public class UserService : IUserService
@@ -19,13 +19,13 @@ public class UserService : IUserService
         _db = db;
     }
 
-    public async Task<IEnumerable<User>> GetAll() => 
-        await _db.Users
+    public async Task<IEnumerable<Employees>> GetAll() => 
+        await _db.Employees
             .Include(u => u.Role)
             .ToListAsync();
 
-    public async Task<User?> GetById(int userId) =>
-        await _db.Users
+    public async Task<Employees?> GetById(int employeeId) =>
+        await _db.Employees
             .Include(u => u.Role)
-            .FirstOrDefaultAsync(u => u.Id == userId);
+            .FirstOrDefaultAsync(u => u.Id == employeeId);
 }

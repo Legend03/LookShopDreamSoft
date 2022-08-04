@@ -22,16 +22,16 @@ public class AccountController : Controller
     }
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Login(User model)
+    public async Task<IActionResult> Login(Employees model)
     {
         if (ModelState.IsValid)
         {
-            User user = await _context.Users
+            Employees employees = await _context.Employees
                 .Include(u => u.Role)
-                .FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
-            if (user != null)
+                .FirstOrDefaultAsync(u => u.Mail == model.Mail && u.Password == model.Password);
+            if (employees != null)
             {
-                await Authenticate(user);
+                await Authenticate(employees);
 
                 return RedirectToAction("Index", "User");
             }
@@ -39,12 +39,12 @@ public class AccountController : Controller
         }
         return View(model);
     }
-    private async Task Authenticate(User user)
+    private async Task Authenticate(Employees employees)
     {
         var claims = new List<Claim>
         {
-            new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email!),
-            new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role!.Name!)
+            new Claim(ClaimsIdentity.DefaultNameClaimType, employees.Mail!),
+            new Claim(ClaimsIdentity.DefaultRoleClaimType, employees.Role!.Name!)
         };
         
         ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,
