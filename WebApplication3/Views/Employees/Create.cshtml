@@ -1,0 +1,46 @@
+﻿@model Employees
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<form  class="col-5" style="margin: 0 auto;" asp-action="Create" asp-controller="Employees">
+    <div style="margin-top: 10px; text-align: center; padding-bottom: 10px; font-size: 25px">Create employee</div>
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control"/>
+    </div>
+    <div>
+        <label asp-for="Surname"></label>
+        <input asp-for="Surname" class="form-control"/>
+    </div>
+    <div>
+        <label asp-for="Patronymic"></label>
+        <input asp-for="Patronymic" class="form-control"/>
+    </div>
+    <div>
+        <label asp-for="PhoneNumber"></label>
+        <input asp-for="PhoneNumber" class="form-control"/>
+    </div>
+    <div>
+        <label asp-for="Mail"></label>
+        <input asp-for="Mail" class="form-control"/>
+    </div>
+    <div>
+        <label asp-for="Password"></label>
+        <input asp-for="Password" class="form-control"/>
+    </div>
+    <div>
+        <label asp-for="DepartmentId"></label>
+        <input asp-for="DepartmentId" class="form-control"/>
+    </div>
+    <div>
+        <label asp-for="RoleId"></label>
+        <input asp-for="RoleId" class="form-control"/>
+    </div>
+    <div style="margin: 0 auto">
+        <button type="submit" class="btn btn-primary" style="margin-left: 129px; margin-top: 20px; width: 150px;">Create</button>
+        <a asp-controller="Employees" asp-action="ListOfEmployees" type="submit" class="btn btn-primary" style="margin-left: 129px; margin-top: 20px; width: 150px;">Back to list</a>
+    </div>
+</form>

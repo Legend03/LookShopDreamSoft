@@ -13,18 +13,50 @@ public class EmployeesController : Controller
     {
         _employeesService = employeesService;
     }
-
-    [Authorize(Roles = "admin")]
+    
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public IActionResult Index()
     {
         return View();
     }
 
+    [HttpGet]
+    public async Task<IActionResult> ListOfEmployees()
+    {
+        return View(await _employeesService.GetAll());
+    }
+
+    [HttpGet]
+    public IActionResult Create()
+    {
+        return View(new Employees());
+    }
+
+    [HttpPost]
+    public IActionResult Create(Employees employees)
+    {
+        _employeesService.Create(employees);
+        return RedirectToAction("ListOfEmployees");
+    }
+
     [Authorize(Roles = "admin")]
     [HttpGet]
-    public async Task<IActionResult> Detail(int userId)
+    public async Task<IActionResult> Update(int employeeId)
     {
-        return View(await _employeesService.GetById(userId));
+        return View(await _employeesService.GetById(employeeId));
+    }
+
+    [HttpPost]
+    public IActionResult Update(ViewModel.Employee employee)
+    {
+        if (_employeesService.Update(employee) != false) return RedirectToAction("ListOfEmployees");
+        ModelState.AddModelError("", "Нет такого отдела!");
+        return View(employee);
+    }
+
+    public IActionResult Delete(int employeeId)
+    {
+        _employeesService.Delete(employeeId);
+        return RedirectToAction("ListOfEmployees");
     }
 }
