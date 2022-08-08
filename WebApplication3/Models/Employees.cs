@@ -1,4 +1,8 @@
-﻿namespace WebApplication3.Models
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.CompilerServices;
+
+namespace WebApplication3.Models
 {
     public class Employees
     {

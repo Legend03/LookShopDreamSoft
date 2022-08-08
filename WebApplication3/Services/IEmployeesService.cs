@@ -54,7 +54,12 @@ public class EmployeesService : IEmployeesService
 
     public async Task Create(Employees employee)
     {
-        await _db.Employees.AddAsync(employee);
+        var countMail = await _db.Employees.Where(e => e.Mail == employee.Mail).ToListAsync();
+        if (countMail.Count == 0)
+        {
+            await _db.Employees.AddAsync(employee);
+            await _db.SaveChangesAsync();
+        }
         await _db.SaveChangesAsync();
     }
 
@@ -65,16 +70,17 @@ public class EmployeesService : IEmployeesService
         {
             return false;
         }
-        _db.Employees.Update(new Employees()
+        var temp = _db.Employees.Update(new Employees()
         {
+            Id = employee.Id,
             Name = employee.Name,
             Surname = employee.Surname,
             Patronymic = employee.Patronymic,
             PhoneNumber = employee.PhoneNumber,
             Mail = employee.Mail,
-            DepartmentId = department?.Id
+            DepartmentId = department?.Result.Id
         });
-        _db.SaveChangesAsync();
+        _db.SaveChanges();
         return true;
     }
 

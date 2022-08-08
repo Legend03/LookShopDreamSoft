@@ -6,7 +6,8 @@
 }
 
 <form  class="col-5" style="margin: 0 auto;" asp-action="Update" asp-controller="Employees">
-    <div style="margin-top: 10px; text-align: center; padding-bottom: 10px; font-size: 25px">Create employee</div>
+    <div style="margin-top: 10px; text-align: center; padding-bottom: 10px; font-size: 25px">Update employee</div>
+    <input asp-for="Id" hidden="hidden"/>
     <div>
         <label asp-for="Name"></label>
         <input asp-for="Name" class="form-control"/>
