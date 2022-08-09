@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.CompilerServices;
+﻿using WebApplication3.Models;
 
 namespace WebApplication3.Models
 {
@@ -19,8 +17,7 @@ namespace WebApplication3.Models
         public int? RoleId { get; set; }
         public Role? Role { get; set; }
 
-        public List<MessagesBetweenDepartments> MessagesBetweenDepartmentsSender { get; set; }
-
-        public List<MessagesBetweenDepartments> MessagesBetweenDepartmentsRecipient { get; set; }
+        public List<MessagesBetweenDepartments>? MessagesBetweenDepartmentsSender { get; set; }
+        public List<MessagesBetweenDepartments>? MessagesBetweenDepartmentsRecipient { get; set; }
     }
 }

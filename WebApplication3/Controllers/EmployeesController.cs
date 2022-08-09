@@ -47,9 +47,9 @@ public class EmployeesController : Controller
     }
 
     [HttpPost]
-    public IActionResult Update(ViewModel.Employee employee)
+    public IActionResult Update(Employees employee)
     {
-        if (_employeesService.Update(employee) != false) return RedirectToAction("ListOfEmployees");
+        if (!_employeesService.Update(employee).IsFaulted) return RedirectToAction("ListOfEmployees");
         ModelState.AddModelError("", "Нет такого отдела!");
         return View(employee);
     }

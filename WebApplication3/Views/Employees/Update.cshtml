@@ -1,4 +1,4 @@
-﻿@model WebApplication3.ViewModel.Employee?
+﻿@model Employees
 
 @{
     ViewBag.Title = "title";
@@ -8,13 +8,15 @@
 <form  class="col-5" style="margin: 0 auto;" asp-action="Update" asp-controller="Employees">
     <div style="margin-top: 10px; text-align: center; padding-bottom: 10px; font-size: 25px">Update employee</div>
     <input asp-for="Id" hidden="hidden"/>
-    <div>
-        <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control"/>
-    </div>
+    <input asp-for="Password" hidden="hidden"/>
+    <input asp-for="RoleId" hidden="hidden"/>
     <div>
         <label asp-for="Surname"></label>
         <input asp-for="Surname" class="form-control"/>
+    </div>
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control"/>
     </div>
     <div>
         <label asp-for="Patronymic"></label>
@@ -29,12 +31,12 @@
         <input asp-for="Mail" class="form-control"/>
     </div>
     <div>
-        <label asp-for="DepartmentName"></label>
-        <input asp-for="DepartmentName" class="form-control"/>
+        <label asp-for="DepartmentId"></label>
+        <input asp-for="DepartmentId" class="form-control"/>
     </div>
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div style="margin: 0 auto">
         <button type="submit" class="btn btn-primary" style="margin-left: 129px; margin-top: 20px; width: 150px;">Update</button>
-        <a asp-controller="Employees" asp-action="ListOfEmployees" type="submit" class="btn btn-primary" style="margin-left: 129px; margin-top: 20px; width: 150px;">Back to list</a>
+        <a asp-controller="Employees" asp-action="ListOfEmployees" class="btn btn-primary" style="margin-left: 129px; margin-top: 20px; width: 150px;">Back to list</a>
     </div>
 </form>
