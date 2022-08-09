@@ -140,9 +140,14 @@ namespace WebApplication3.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ParentDepartmentId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BranchId");
+
+                    b.HasIndex("ParentDepartmentId");
 
                     b.ToTable("Departments");
                 });
@@ -295,7 +300,13 @@ namespace WebApplication3.Migrations
                         .WithMany("MainOffice")
                         .HasForeignKey("BranchId");
 
+                    b.HasOne("WebApplication3.Models.Departments", "ParentDepartment")
+                        .WithMany()
+                        .HasForeignKey("ParentDepartmentId");
+
                     b.Navigation("Branch");
+
+                    b.Navigation("ParentDepartment");
                 });
 
             modelBuilder.Entity("WebApplication3.Models.Employees", b =>
