@@ -1,4 +1,6 @@
-﻿namespace WebApplication3.Models
+﻿using WebApplication3.Models;
+
+namespace WebApplication3.Models
 {
     public class Employees
     {
@@ -15,8 +17,7 @@
         public int? RoleId { get; set; }
         public Role? Role { get; set; }
 
-        public List<MessagesBetweenDepartments> MessagesBetweenDepartmentsSender { get; set; }
-
-        public List<MessagesBetweenDepartments> MessagesBetweenDepartmentsRecipient { get; set; }
+        public List<MessagesBetweenDepartments>? MessagesBetweenDepartmentsSender { get; set; }
+        public List<MessagesBetweenDepartments>? MessagesBetweenDepartmentsRecipient { get; set; }
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApplication3.Data;
 using WebApplication3.Models;
+using WebApplication3.ViewModel;
 
 namespace WebApplication3.Controllers;
 
@@ -24,29 +25,32 @@ public class AccountController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Login(Employees model)
+    public async Task<IActionResult> Login(Authorization model)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            var employee = await _context.Employees
-                .Include(u => u.Role)
-                .FirstOrDefaultAsync(u => u.Mail == model.Mail && u.Password == model.Password);
-            var customer = await _context.Customers
-                .FirstOrDefaultAsync(u => u.Mail == model.Mail && u.Password == model.Password);
-            if (employee != null)
-            {
-                await Authenticate(employee);
-
-                return RedirectToAction("Index", "Employees");
-            }
-            else if(customer != null)
-            {
-                await Authenticate(customer);
-
-                return RedirectToAction("Index", "Customers");
-            }
             ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+            return View(model);
         }
+        var employee = await _context.Employees
+            .Include(u => u.Role)
+            .FirstOrDefaultAsync(u => u.Mail == model.Mail && u.Password == model.Password);
+        var customer = await _context.Customers
+            .FirstOrDefaultAsync(u => u.Mail == model.Mail && u.Password == model.Password);
+        if (employee != null)
+        {
+            await Authenticate(employee);
+
+            return RedirectToAction("Index", "Employees");
+        }
+        else if(customer != null)
+        {
+            await Authenticate(customer);
+
+            //return RedirectToAction("Index", "Customers");
+        }
+
+        ModelState.AddModelError("", "Некорректные логин и(или) пароль");
         return View(model);
     }
 

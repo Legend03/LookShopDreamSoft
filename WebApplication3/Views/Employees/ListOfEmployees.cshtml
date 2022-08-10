@@ -1,0 +1,36 @@
+﻿@model List<WebApplication3.ViewModel.Employee>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+<div style="text-align: center; padding: 15px 0px;" >
+    <a style="width: 200px" class="btn btn-primary" asp-controller="Employees" asp-action="Create">Create</a>
+</div>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Surname</th>
+        <th scope="col">Name</th>
+        <th scope="col">Patronymic</th>
+        <th scope="col">PhoneNumber</th>
+        <th scope="col">Mail</th>
+        <th scope="col">Department name</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    @foreach (var employee in Model)
+    {
+        <tr>
+            <td>@employee.Surname</td>
+            <td>@employee.Name</td>
+            <td>@employee.Patronymic</td>
+            <td>@employee.PhoneNumber</td>
+            <td>@employee.Mail</td>
+            <td>@employee.DepartmentName</td>
+            <td><a asp-controller="Employees" asp-action="Update" class="btn btn-success" asp-route-employeeId="@employee.Id">edit</a></td>
+            <td><a asp-controller="Employees" asp-action="Delete" class="btn btn-danger" asp-route-employeeId="@employee.Id">remove</a></td>
+        </tr>
+    }
+</table>
