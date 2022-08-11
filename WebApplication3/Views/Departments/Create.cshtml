@@ -1,0 +1,38 @@
+﻿@model Departments
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<div class="row">
+    <div class="col-4"></div>
+    <div class="col-4">
+        <h2 class="text-center mb-2">Create User</h2>
+        <hr class="mb-3" />
+        <form asp-controller="Departments" asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mb-5">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control"/>
+            </div>
+            <div class="form-group mb-5">
+                <label asp-for="Location"></label>
+                <input asp-for="Location" class="form-control"/>
+            </div>
+            <div class="form-group mb-5">
+                <label asp-for="BranchId"></label>
+                <input asp-for="BranchId" class="form-control"/>
+            </div>
+            <div class="form-group mb-5">
+                <label asp-for="ParentDepartmentId"></label>
+                <input asp-for="ParentDepartmentId" class="form-control"/>
+            </div>
+            <div class="form-group mb-5">
+                <input type="submit" value="Create" class="btn btn-outline-success"/>
+                <a asp-controller="Departments" asp-action="Index" class="btn btn-outline-primary ml-4">Back to list</a>
+            </div>
+        </form>
+    </div>
+    <div class="col-4"></div>
+</div>

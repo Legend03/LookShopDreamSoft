@@ -7,13 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Compile Remove="Pages\**" />
-      <Content Remove="Pages\**" />
-      <EmbeddedResource Remove="Pages\**" />
-      <None Remove="Pages\**" />
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.7">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -26,6 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Pages\" />
       <Folder Include="wwwroot\images" />
       <Folder Include="wwwroot\startPage\imagesSecond" />
     </ItemGroup>
@@ -281,6 +275,14 @@
       <Content Remove="wwwroot\images\c4.jpg" />
       <Content Remove="wwwroot\images\c3.jpg" />
       <Content Remove="wwwroot\images\c2.jpg" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Views\Departments\Index.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Departments\Index.cshtml" />
     </ItemGroup>
 
 </Project>

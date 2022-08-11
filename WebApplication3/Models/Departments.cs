@@ -9,6 +9,7 @@
         public int? BranchId { get; set; }
         public Branches? Branch { get; set; }
         public ICollection<Employees>? Employees { get; set; }
+        public int? ParentDepartmentId { get; set; }
         public Departments? ParentDepartment { get; set; }
     }
 }
