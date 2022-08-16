@@ -33,7 +33,7 @@ namespace WebApplication3.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Departments department)
         {
-            if (!_departmentsService.Update(department).IsFaulted) return RedirectToAction("Index");
+            if (_departmentsService.Update(department).IsFaulted) return RedirectToAction("Create", "Departments");
             ModelState.AddModelError("", "Нет такого филиала или отдела!");
             await _departmentsService.Create(department);
             return RedirectToAction("Index", "Departments");
@@ -56,7 +56,7 @@ namespace WebApplication3.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Departments department)
         {
-            if (!_departmentsService.Update(department).IsFaulted) return RedirectToAction("Edit");
+            if (_departmentsService.Update(department).IsFaulted) return RedirectToAction("Edit", "Departments");
             ModelState.AddModelError("", "Нет такого филиала или отдела!");
             await _departmentsService.Update(department);
             return RedirectToAction("Index", "Departments");
