@@ -17,6 +17,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         });
 
 builder.Services.AddScoped<IEmployeesService, EmployeesService>();
+builder.Services.AddScoped<IDepartmentsService, DepartmentsService>();
 
 builder.Services.AddControllersWithViews();
 
