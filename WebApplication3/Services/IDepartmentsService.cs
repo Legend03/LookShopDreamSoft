@@ -8,7 +8,7 @@ namespace WebApplication3.Services
     public interface IDepartmentsService
     {
         Task<IEnumerable<DepartmentViewModel?>> GetDepartments();
-        Task<Departments?> GetById(int departmentId);
+        Task<Departments?> GetById(int? departmentId);
         Task Create(Departments department);
         Task Update(Departments department);
         Task Delete(int departmentId);
@@ -34,7 +34,7 @@ namespace WebApplication3.Services
                     ParentDepartmentName = d.ParentDepartment.Name
                 }).ToListAsync();
 
-        public async Task<Departments?> GetById(int departmentId) =>
+        public async Task<Departments?> GetById(int? departmentId) =>
             await _db.Departments.AsNoTracking().FirstOrDefaultAsync(u => u.Id == departmentId);
 
 

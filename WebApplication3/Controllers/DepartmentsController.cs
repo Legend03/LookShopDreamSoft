@@ -21,22 +21,29 @@ namespace WebApplication3.Controllers
 
         //[Authorize(Roles = "admin")]
         [HttpGet]
-        public async Task<IActionResult> Details(int departmentId) => 
+        public async Task<IActionResult> Details(int departmentId) =>
             View(await _departmentsService.GetById(departmentId));
 
         //[Authorize(Roles = "admin")]
         [HttpGet]
-        public IActionResult Create() => 
+        public IActionResult Create() =>
             View(new Departments());
 
         //[Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> Create(Departments department)
         {
-            if (_departmentsService.Update(department).IsFaulted) return RedirectToAction("Create", "Departments");
-            ModelState.AddModelError("", "Нет такого филиала или отдела!");
-            await _departmentsService.Create(department);
-            return RedirectToAction("Index", "Departments");
+            if (department.ParentDepartmentId != null &&
+                await _departmentsService.GetById(department.ParentDepartmentId) == null)
+            {
+                ModelState.AddModelError("ParentDepartmentId", "Нет такого отдела!");
+                return View(department);
+            }
+            else
+            {
+                await _departmentsService.Create(department);
+                return RedirectToAction("Index", "Departments");
+            }
         }
 
         //[Authorize(Roles = "admin")]
@@ -56,10 +63,17 @@ namespace WebApplication3.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Departments department)
         {
-            if (_departmentsService.Update(department).IsFaulted) return RedirectToAction("Edit", "Departments");
-            ModelState.AddModelError("", "Нет такого филиала или отдела!");
-            await _departmentsService.Update(department);
-            return RedirectToAction("Index", "Departments");
+            if (department.ParentDepartmentId != null &&
+                await _departmentsService.GetById(department.ParentDepartmentId) == null)
+            {
+                ModelState.AddModelError("ParentDepartmentId", "Нет такого отдела!");
+                return View(department);
+            }
+            else
+            {
+                await _departmentsService.Update(department);
+                return RedirectToAction("Index", "Departments");
+            }
         }
     }
 }
