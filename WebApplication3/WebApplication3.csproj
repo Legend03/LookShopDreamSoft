@@ -283,6 +283,11 @@
 
     <ItemGroup>
       <_ContentIncludedByDefault Remove="Views\Departments\Index.cshtml" />
+      <UpToDateCheckInput Remove="Views\Employees\ListOfEmployees.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Employees\ListOfEmployees.cshtml" />
     </ItemGroup>
 
 </Project>
